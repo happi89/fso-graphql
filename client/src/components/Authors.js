@@ -1,15 +1,17 @@
 import { useQuery } from '@apollo/client';
-import { ALL_AUTHORS } from './queries';
+import { ALL_AUTHORS, AUTHOR_NAMES } from '../queries';
+import AuthorForm from './AuthorForm';
 
 const Authors = () => {
 	const result = useQuery(ALL_AUTHORS);
+	const names = useQuery(AUTHOR_NAMES);
 
-	if (result.loading) {
+	if (result.loading || names.loading) {
 		return <div>loading...</div>;
 	}
 
 	return (
-		<div>
+		<>
 			<h2>Authors</h2>
 			<table>
 				<thead>
@@ -31,7 +33,8 @@ const Authors = () => {
 					})}
 				</tbody>
 			</table>
-		</div>
+			<AuthorForm names={names} />
+		</>
 	);
 };
 

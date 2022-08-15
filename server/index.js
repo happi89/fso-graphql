@@ -155,7 +155,7 @@ const resolvers = {
 			console.log(author);
 
 			if (!author) {
-				author = { name: args.author };
+				author = { name: args.author, id: uuid() };
 				authors = authors.concat(author);
 			}
 

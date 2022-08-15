@@ -1,7 +1,7 @@
-import Authors from './Authors';
-import Books from './Books';
-import Filter from './Filter';
-import BookForm from './BookForm';
+import Authors from './components/Authors';
+import Books from './components/Books';
+import Filter from './components/Filter';
+import BookForm from './components/BookForm';
 import { useState } from 'react';
 
 function App() {
