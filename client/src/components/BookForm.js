@@ -66,9 +66,11 @@ const BookForm = () => {
 						value={genre}
 						onChange={({ target }) => setGenre(target.value)}
 					/>
-					<button type='button' onClick={() => addGenres(genre)}>
-						add genre
-					</button>
+					<input
+						value='add genre'
+						type='button'
+						onClick={() => addGenres(genre)}
+					/>
 					<div>{genres.map((genre) => genre).join(' ')}</div>
 				</div>
 				<button type='submit'>Add Book</button>

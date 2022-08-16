@@ -20,12 +20,15 @@ export const AUTHOR_NAMES = gql`
 `;
 
 export const ALL_BOOKS = gql`
-	query {
+	query AllBooks {
 		allBooks {
 			title
-			author
 			published
+			genres
 			id
+			author {
+				name
+			}
 		}
 	}
 `;
@@ -44,8 +47,13 @@ export const ADD_BOOK = gql`
 			genres: $genres
 		) {
 			title
+			author {
+				name
+				born
+				bookCount
+				id
+			}
 			published
-			author
 			genres
 		}
 	}
