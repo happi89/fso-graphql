@@ -41,6 +41,7 @@ const BookForm = () => {
 						type='text'
 						value={title}
 						onChange={({ target }) => setTitle(target.value)}
+						style={{ background: 'lightgray' }}
 					/>
 				</div>
 				<div>
@@ -49,6 +50,7 @@ const BookForm = () => {
 						type='text'
 						value={author}
 						onChange={({ target }) => setAuthor(target.value)}
+						style={{ background: 'lightgray' }}
 					/>
 				</div>
 				<div>
@@ -57,23 +59,30 @@ const BookForm = () => {
 						type='number'
 						value={published}
 						onChange={({ target }) => setPublished(+target.value)}
+						style={{ background: 'lightgray' }}
 					/>
 				</div>
-				<div>
-					Genre
+				Genre
+				<div style={{ display: 'flex' }}>
 					<input
 						type='text'
 						value={genre}
 						onChange={({ target }) => setGenre(target.value)}
+						style={{ background: 'lightgray' }}
 					/>
 					<input
-						value='add genre'
+						value='Add genre'
 						type='button'
 						onClick={() => addGenres(genre)}
+						style={{ background: 'dodgerblue', color: 'white' }}
 					/>
-					<div>{genres.map((genre) => genre).join(' ')}</div>
 				</div>
-				<button type='submit'>Add Book</button>
+				<div>{genres.map((genre) => genre).join(' ')}</div>
+				<button
+					type='submit'
+					style={{ backgroundColor: 'dodgerblue', color: 'white' }}>
+					Add Book
+				</button>
 			</form>
 		</>
 	);

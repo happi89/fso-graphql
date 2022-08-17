@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client';
 import Select from 'react-select';
 
 const AuthorForm = ({ names }) => {
-	const [name, setName] = useState(null);
+	const [name, setName] = useState('Robert Martin');
 	const [year, setYear] = useState('');
 
 	let options = names.data.allAuthors.map((name) => {
@@ -31,11 +31,7 @@ const AuthorForm = ({ names }) => {
 			<h2>Add Birth Year</h2>
 			<form onSubmit={submit}>
 				<div>
-					<Select
-						defaultValue={options[0]}
-						onChange={setName}
-						options={options}
-					/>
+					<Select onChange={setName} options={options} />
 				</div>
 				<div>
 					Year
@@ -43,9 +39,14 @@ const AuthorForm = ({ names }) => {
 						type='number'
 						value={year}
 						onChange={({ target }) => setYear(+target.value)}
+						style={{ background: 'lightgray' }}
 					/>
 				</div>
-				<button type='submit'>Update Author</button>
+				<button
+					type='submit'
+					style={{ backgroundColor: 'dodgerblue', color: 'white' }}>
+					Update Author
+				</button>
 			</form>
 		</>
 	);

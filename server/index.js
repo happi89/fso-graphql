@@ -61,7 +61,7 @@ const typeDefs = gql`
 			genres: [String!]!
 		): Book
 		editAuthor(name: String!, setBornTo: Int!): Author
-		createUser(username: String!, password: String!): User
+		createUser(username: String!, favoriteGenre: String!): User
 		login(username: String!, password: String!): Token
 	}
 `;
@@ -139,7 +139,10 @@ const resolvers = {
 			return authorToUpdate;
 		},
 		createUser: async (root, args) => {
-			const user = new User({ username: args.username });
+			const user = new User({
+				username: args.username,
+				favoriteGenre: args.favoriteGenre,
+			});
 
 			return user.save().catch((err) => {
 				throw new UserInputError(err.message, {
@@ -147,8 +150,10 @@ const resolvers = {
 				});
 			});
 		},
-		login: async (root, args, context) => {
-			const user = user.findOne({ username: args.username });
+		login: async (root, args) => {
+			console.log(args);
+			const user = await User.findOne({ username: args.username });
+			console.log(user);
 
 			if (!user || args.password !== 'ahmad') {
 				throw new UserInputError('wrong credentials');
@@ -171,9 +176,11 @@ const server = new ApolloServer({
 
 		if (auth && auth.toLowerCase().startsWith('bearer ')) {
 			const decodedToken = jwt.verify(auth.substring(7), process.env.SECRET);
+			const user = await User.findById(decodedToken.id).populate(
+				'favoriteGenre'
+			);
+			return { user };
 		}
-		const user = await User.findById(decodedToken.id);
-		return { user };
 	},
 });
 
