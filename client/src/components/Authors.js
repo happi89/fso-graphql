@@ -11,9 +11,9 @@ const Authors = ({ token }) => {
 	}
 
 	return (
-		<>
-			<h2>Authors</h2>
-			<table>
+		<div class='artboard artboard-horizontal phone-4 card-body my-0 mx-auto'>
+			<h2 class='font-bold text-2xl text-center mb-1'>Authors</h2>
+			<table class='table table-zebra table-compact w-full'>
 				<thead>
 					<tr>
 						<th>Name</th>
@@ -34,7 +34,7 @@ const Authors = ({ token }) => {
 				</tbody>
 			</table>
 			{token != null ? <AuthorForm names={names} /> : null}
-		</>
+		</div>
 	);
 };
 

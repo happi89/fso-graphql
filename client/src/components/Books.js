@@ -33,10 +33,12 @@ const Books = ({ genre }) => {
 		});
 	};
 
+	const buttonStyle = 'btn btn-outline  m-2 text-lg';
+
 	return (
-		<div>
-			<h2>Books</h2>
-			<table>
+		<div class='artboard artboard-horizontal phone-4 card-body my-0 mx-auto'>
+			<h2 class='text-2xl font-bold text-center mb-2'>Books</h2>
+			<table class='table table-compact table-zebra w-full'>
 				<thead>
 					<tr>
 						<th>Title</th>
@@ -46,16 +48,37 @@ const Books = ({ genre }) => {
 				</thead>
 				<tbody>{filterBooks()}</tbody>
 			</table>
-			<div>
-				<button onClick={() => refetch({ genre: '' })}>All</button>
-				<button onClick={() => refetch({ genre: 'refactoring' })}>
+			<h1 class='text-center font-bold m-1 text-lg'>Filter By Genre</h1>
+			<div class='flex justify-center btn-group'>
+				<button class={buttonStyle} onClick={() => refetch({ genre: '' })}>
+					All
+				</button>
+				<button
+					class={buttonStyle}
+					onClick={() => refetch({ genre: 'refactoring' })}>
 					Refactoring
 				</button>
-				<button onClick={() => refetch({ genre: 'agile' })}>Agile</button>
-				<button onClick={() => refetch({ genre: 'patterns' })}>Patterns</button>
-				<button onClick={() => refetch({ genre: 'design' })}>Design</button>
-				<button onClick={() => refetch({ genre: 'crime' })}>Crime</button>
-				<button onClick={() => refetch({ genre: 'classic' })}>Classic</button>
+				<button class={buttonStyle} onClick={() => refetch({ genre: 'agile' })}>
+					Agile
+				</button>
+				<button
+					class={buttonStyle}
+					onClick={() => refetch({ genre: 'patterns' })}>
+					Patterns
+				</button>
+				<button
+					class={buttonStyle}
+					onClick={() => refetch({ genre: 'design' })}>
+					Design
+				</button>
+				<button class={buttonStyle} onClick={() => refetch({ genre: 'crime' })}>
+					Crime
+				</button>
+				<button
+					class={buttonStyle}
+					onClick={() => refetch({ genre: 'classic' })}>
+					Classic
+				</button>
 			</div>
 		</div>
 	);

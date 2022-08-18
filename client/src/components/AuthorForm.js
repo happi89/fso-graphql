@@ -28,23 +28,27 @@ const AuthorForm = ({ names }) => {
 
 	return (
 		<>
-			<h2>Add Birth Year</h2>
+			<h2 class='text-lg font-bold m-1'>Add Birth Year</h2>
 			<form onSubmit={submit}>
 				<div>
-					<Select onChange={setName} options={options} />
+					<Select
+						class='select select-bordered w-full max-w-xs'
+						onChange={setName}
+						options={options}
+					/>
 				</div>
 				<div>
-					Year
+					<label class='label'>
+						<span class='label-text'>Year</span>
+					</label>
 					<input
 						type='number'
 						value={year}
 						onChange={({ target }) => setYear(+target.value)}
-						style={{ background: 'lightgray' }}
+						class='input input-bordered w-full max-w-xs mb-2'
 					/>
 				</div>
-				<button
-					type='submit'
-					style={{ backgroundColor: 'dodgerblue', color: 'white' }}>
+				<button class='btn btn-primary btn-wide' type='submit'>
 					Update Author
 				</button>
 			</form>

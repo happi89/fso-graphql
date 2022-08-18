@@ -39,59 +39,67 @@ const BookForm = () => {
 	};
 
 	return (
-		<>
-			<h2>Add Book</h2>
-			<form onSubmit={submit}>
-				<div>
-					Title
-					<input
-						type='text'
-						value={title}
-						onChange={({ target }) => setTitle(target.value)}
-						style={{ background: 'lightgray' }}
-					/>
-				</div>
-				<div>
-					author
-					<input
-						type='text'
-						value={author}
-						onChange={({ target }) => setAuthor(target.value)}
-						style={{ background: 'lightgray' }}
-					/>
-				</div>
-				<div>
-					Published
-					<input
-						type='number'
-						value={published}
-						onChange={({ target }) => setPublished(+target.value)}
-						style={{ background: 'lightgray' }}
-					/>
-				</div>
-				Genre
-				<div style={{ display: 'flex' }}>
-					<input
-						type='text'
-						value={genre}
-						onChange={({ target }) => setGenre(target.value)}
-						style={{ background: 'lightgray' }}
-					/>
-					<input
-						value='Add genre'
-						type='button'
-						onClick={() => addGenres(genre)}
-						style={{ background: 'dodgerblue', color: 'white' }}
-					/>
-				</div>
-				<div>{genres.map((genre) => genre).join(' ')}</div>
-				<button
-					type='submit'
-					style={{ backgroundColor: 'dodgerblue', color: 'white' }}>
-					Add Book
-				</button>
-			</form>
-		</>
+		<div class='card shadow-xl w-96 bg-base-100 my-0 mx-auto mt-2'>
+			<div class='card-body'>
+				<h2 class='text-2xl font-bold'>Add Book</h2>
+				<form onSubmit={submit}>
+					<div>
+						<label class='label'>
+							<span class='label-text'>Title</span>
+						</label>
+						<input
+							type='text'
+							value={title}
+							onChange={({ target }) => setTitle(target.value)}
+							class='input input-bordered w-full max-w-xs'
+						/>
+					</div>
+					<div>
+						<label class='label'>
+							<span class='label-text'>Author</span>
+						</label>
+						<input
+							type='text'
+							value={author}
+							onChange={({ target }) => setAuthor(target.value)}
+							class='input input-bordered  w-full max-w-xs'
+						/>
+					</div>
+					<div>
+						<label class='label'>
+							<span class='label-text'>Published</span>
+						</label>
+						<input
+							type='number'
+							value={published}
+							onChange={({ target }) => setPublished(+target.value)}
+							class='input input-bordered  w-full max-w-xs'
+						/>
+					</div>
+					<label class='label'>
+						<span class='label-text'>Genre</span>
+					</label>
+					<div style={{ display: 'flex' }}>
+						<input
+							type='text'
+							value={genre}
+							onChange={({ target }) => setGenre(target.value)}
+							class='input input-bordered'
+						/>
+						<input
+							value='Add genre'
+							type='button'
+							onClick={() => addGenres(genre)}
+							class='btn btn-outline ml-2 max-w-xs'
+						/>
+					</div>
+					<div>{genres.map((genre) => genre).join(' ')}</div>
+					<button class='btn btn-primary w-full mt-2' type='submit'>
+						Add Book
+					</button>
+				</form>
+			</div>
+		</div>
 	);
 };
 

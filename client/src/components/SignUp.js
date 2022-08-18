@@ -12,30 +12,36 @@ const SignUp = ({ showSignUp, setShowSignUp }) => {
 	};
 
 	return (
-		<>
-			<h2>Sign Up</h2>
+		<div>
+			<h2 className='text-2xl font-bold'>Sign Up</h2>
 			<form onSubmit={signUpSubmit}>
-				Username
+				<label className='label'>
+					<span className='label-text'>Username</span>
+				</label>
 				<input
+					class='input input-bordered w-full max-w-xs'
 					type='text'
 					value={username}
 					onChange={({ target }) => setUsername(target.value)}
 				/>
-				favoriteGenre
+				<label className='label'>
+					<span className='label-text'>Favorite Genre</span>
+				</label>
 				<input
+					class='input input-bordered w-full max-w-xs'
 					type='text'
 					value={favoriteGenre}
 					onChange={({ target }) => setFavoriteGenre(target.value)}
 				/>
-				<button style={{ background: 'dodgerblue', color: 'white' }}>
-					Sign Up
-				</button>
+				<button class='btn btn-primary mt-2 w-full'>Sign Up</button>
 				<div>
 					{/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-					<a onClick={() => setShowSignUp(!showSignUp)}>Log In</a>
+					<a className='link' onClick={() => setShowSignUp(!showSignUp)}>
+						Log In
+					</a>
 				</div>
 			</form>
-		</>
+		</div>
 	);
 };
 

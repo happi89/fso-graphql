@@ -8,6 +8,7 @@ import { useApolloClient } from '@apollo/client';
 import Recommendation from './components/Recommendation';
 import { ALL_BOOKS } from './queries';
 import { useQuery } from '@apollo/client';
+import './index.css';
 
 function App() {
 	const [view, setView] = useState('login');
