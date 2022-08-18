@@ -1,16 +1,7 @@
-import { useQuery } from '@apollo/client';
-import { ALL_BOOKS } from '../queries';
 import { useState } from 'react';
 
-const Books = () => {
-	const result = useQuery(ALL_BOOKS);
+const Books = ({ books }) => {
 	const [genre, setGenre] = useState('all');
-
-	if (result.loading) {
-		return <div>loading...</div>;
-	}
-
-	const books = result.data.allBooks;
 
 	const filterBooks = () => {
 		if (genre === 'all') {
