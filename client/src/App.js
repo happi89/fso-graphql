@@ -36,7 +36,7 @@ function App() {
 			case 'authors':
 				return <Authors token={token} />;
 			case 'books':
-				return <Books books={result.data.allBooks} />;
+				return <Books genre='' />;
 			case 'book form':
 				return <BookForm />;
 			case 'recommendation':

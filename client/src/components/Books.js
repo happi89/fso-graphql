@@ -1,11 +1,18 @@
-import { useState } from 'react';
+import { FILTER_BOOKS } from '../queries';
+import { useQuery } from '@apollo/client';
 
-const Books = ({ books }) => {
-	const [genre, setGenre] = useState('all');
+const Books = ({ genre }) => {
+	const { loading, error, data, refetch } = useQuery(FILTER_BOOKS, {
+		variables: { genre: '' },
+	});
+
+	if (loading) return 'Loading...';
+	if (error) return `Error! ${error.message}`;
 
 	const filterBooks = () => {
-		if (genre === 'all') {
-			return books.map((book) => {
+		if (genre === '') {
+			refetch();
+			return data.allBooks.map((book) => {
 				return (
 					<tr key={book.id}>
 						<td>{book.title}</td>
@@ -15,8 +22,7 @@ const Books = ({ books }) => {
 				);
 			});
 		}
-		const filterdbooks = books.filter((book) => book.genres.includes(genre));
-		return filterdbooks.map((book) => {
+		return data.allbooks.map((book) => {
 			return (
 				<tr key={book.id}>
 					<td>{book.title}</td>
@@ -41,13 +47,15 @@ const Books = ({ books }) => {
 				<tbody>{filterBooks()}</tbody>
 			</table>
 			<div>
-				<button onClick={() => setGenre('all')}>All</button>
-				<button onClick={() => setGenre('refactoring')}>Refactoring</button>
-				<button onClick={() => setGenre('agile')}>Agile</button>
-				<button onClick={() => setGenre('patterns')}>Patterns</button>
-				<button onClick={() => setGenre('design')}>Design</button>
-				<button onClick={() => setGenre('crime')}>Crime</button>
-				<button onClick={() => setGenre('classic')}>Classic</button>
+				<button onClick={() => refetch({ genre: '' })}>All</button>
+				<button onClick={() => refetch({ genre: 'refactoring' })}>
+					Refactoring
+				</button>
+				<button onClick={() => refetch({ genre: 'agile' })}>Agile</button>
+				<button onClick={() => refetch({ genre: 'patterns' })}>Patterns</button>
+				<button onClick={() => refetch({ genre: 'design' })}>Design</button>
+				<button onClick={() => refetch({ genre: 'crime' })}>Crime</button>
+				<button onClick={() => refetch({ genre: 'classic' })}>Classic</button>
 			</div>
 		</div>
 	);

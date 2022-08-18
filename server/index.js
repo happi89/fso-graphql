@@ -82,11 +82,11 @@ const resolvers = {
 			// 	});
 			// }
 
-			// if (args.genre) {
-			// 	return await Book.find({
-			// 		genres: { $in: [args.genre] },
-			// 	});
-			// }
+			if (args.genre) {
+				return await Book.find({
+					genres: { $in: [args.genre] },
+				}).populate('author');
+			}
 			return await Book.find({}).populate('author');
 		},
 		allAuthors: async () => await Author.find({}),
