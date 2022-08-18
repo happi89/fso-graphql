@@ -5,11 +5,20 @@ import BookForm from './components/BookForm';
 import { useState } from 'react';
 import Login from './components/Login';
 import { useApolloClient } from '@apollo/client';
+import Recommendation from './components/Recommendation';
+import { ALL_BOOKS } from './queries';
+import { useQuery } from '@apollo/client';
 
 function App() {
 	const [view, setView] = useState('login');
 	const [token, setToken] = useState(null);
 	const client = useApolloClient();
+
+	const result = useQuery(ALL_BOOKS);
+
+	if (result.loading) {
+		return <div>loading...</div>;
+	}
 
 	const viewChange = (view) => {
 		setView(view);
@@ -27,9 +36,11 @@ function App() {
 			case 'authors':
 				return <Authors token={token} />;
 			case 'books':
-				return <Books />;
+				return <Books books={result.data.allBooks} />;
 			case 'book form':
 				return <BookForm />;
+			case 'recommendation':
+				return <Recommendation books={result.data.allBooks} />;
 			default:
 				return <Login setToken={setToken} viewChange={viewChange} />;
 		}

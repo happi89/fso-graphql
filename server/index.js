@@ -1,4 +1,4 @@
-const { UserInputError } = require('apollo-server');
+const { UserInputError, AuthenticationError } = require('apollo-server');
 const { ApolloServer, gql } = require('apollo-server');
 require('dotenv').config();
 const mongoose = require('mongoose');
@@ -100,8 +100,13 @@ const resolvers = {
 		},
 	},
 	Mutation: {
-		addBook: async (root, args) => {
+		addBook: async (root, args, context) => {
 			const author = await Author.findOne({ name: args.author });
+			const user = context.user;
+
+			if (!user) {
+				throw new AuthenticationError('not authenticated');
+			}
 
 			if (author === null) {
 				const author = new Author({ name: args.author });
@@ -124,9 +129,15 @@ const resolvers = {
 			}
 			return newBook.populate('author');
 		},
-		editAuthor: async (root, args) => {
+		editAuthor: async (root, args, context) => {
 			const authorToUpdate = await Author.findOne({ name: args.name });
 			authorToUpdate.born = args.setBornTo;
+
+			const user = context.user;
+
+			if (!user) {
+				throw new AuthenticationError('not authenticated');
+			}
 
 			try {
 				await authorToUpdate.save();
@@ -151,9 +162,7 @@ const resolvers = {
 			});
 		},
 		login: async (root, args) => {
-			console.log(args);
 			const user = await User.findOne({ username: args.username });
-			console.log(user);
 
 			if (!user || args.password !== 'ahmad') {
 				throw new UserInputError('wrong credentials');
@@ -172,13 +181,11 @@ const server = new ApolloServer({
 	typeDefs,
 	resolvers,
 	context: async ({ req }) => {
-		const auth = req ? req.params.authorization : null;
+		const auth = req ? req.headers.authorization : null;
 
 		if (auth && auth.toLowerCase().startsWith('bearer ')) {
 			const decodedToken = jwt.verify(auth.substring(7), process.env.SECRET);
-			const user = await User.findById(decodedToken.id).populate(
-				'favoriteGenre'
-			);
+			const user = await User.findOne({ id: decodedToken.id });
 			return { user };
 		}
 	},

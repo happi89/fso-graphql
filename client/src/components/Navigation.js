@@ -7,6 +7,9 @@ const Navigation = ({ viewChange, token, logout }) => {
 
 			{token != null ? (
 				<>
+					<button onClick={() => viewChange('recommendation')}>
+						Recommendation
+					</button>
 					<button onClick={() => viewChange('book form')}>Add Book</button>
 					<button onClick={logout}>Logout</button>
 				</>
