@@ -1,9 +1,9 @@
 import Authors from './components/Authors/Authors';
 import Books from './components/Books/Books';
 import Navigation from './components/Navigation';
-import BookForm from './components/BookForm';
+import BookForm from './components/BookForm/BookForm';
 import { useState } from 'react';
-import Login from './components/Login';
+import Login from './components/Login/Login';
 import { useApolloClient } from '@apollo/client';
 import Recommendation from './components/Recommendation';
 import { ALL_BOOKS } from './queries';

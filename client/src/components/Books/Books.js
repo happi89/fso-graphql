@@ -40,7 +40,7 @@ const Books = ({ genre, token }) => {
 
 	return (
 		<div class='artboard artboard-horizontal phone-4 card-body my-0 mx-auto'>
-			<h2 class='text-2xl font-bold text-center mb-2'>Books</h2>
+			<h2 class='text-2xl font-bold mb-2'>Books</h2>
 			<table class='table table-compact table-zebra w-full'>
 				<thead>
 					<tr>

@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { LOGIN } from '../queries';
+import { LOGIN } from '../../queries';
 import SignUp from './SignUp';
-import '../index.css';
 
 const Login = ({ setToken, viewChange }) => {
 	const [username, setUsername] = useState('');

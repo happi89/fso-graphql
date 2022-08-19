@@ -3,7 +3,7 @@ import { AUTHOR_NAMES, UPDATE_AUTHOR, ALL_AUTHORS } from '../../queries';
 import { useMutation } from '@apollo/client';
 import Select from 'react-select';
 
-const AuthorForm = ({ names }) => {
+const AuthorForm = ({ names, setNotification, timeout }) => {
 	const [name, setName] = useState('Robert Martin');
 	const [year, setYear] = useState('');
 
@@ -17,11 +17,16 @@ const AuthorForm = ({ names }) => {
 
 	const submit = (event) => {
 		event.preventDefault();
+		clearTimeout(timeout);
 
 		addYear({
-			variables: { name: name.value, setBornTo: year },
+			variables: { name: name.label, setBornTo: year },
 		});
 
+		timeout = setTimeout(() => {
+			setNotification(false);
+		}, 5000);
+		setNotification(true);
 		setName('');
 		setYear('');
 	};

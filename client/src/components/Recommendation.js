@@ -17,7 +17,7 @@ const Recommendation = ({ books }) => {
 	console.log(recommendedBooks);
 
 	return (
-		<div class='artboard artboard-horizontal phone-4 card-body my-0 mx-auto'>
+		<div class='max-w-3xl card-body my-0 mx-auto'>
 			<h2 class='text-2xl font-bold'>Recommendations</h2>
 			<p class='text-lg'>
 				Based on your favorite genre <strong>{favoriteGenre}</strong>

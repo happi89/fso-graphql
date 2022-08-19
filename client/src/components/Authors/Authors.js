@@ -1,8 +1,13 @@
 import { useQuery } from '@apollo/client';
 import { ALL_AUTHORS, AUTHOR_NAMES } from '../../queries';
 import AuthorForm from './AuthorForm';
+import Success from '../Notifications/Success';
+import { useState } from 'react';
 
 const Authors = ({ token }) => {
+	const [notification, setNotification] = useState(false);
+	let timeout;
+
 	const result = useQuery(ALL_AUTHORS);
 	const names = useQuery(AUTHOR_NAMES);
 
@@ -12,7 +17,8 @@ const Authors = ({ token }) => {
 
 	return (
 		<div class='artboard artboard-horizontal phone-4 card-body my-0 mx-auto'>
-			<h2 class='font-bold text-2xl text-center mb-1'>Authors</h2>
+			{notification ? <Success success='Author has been changed' /> : null}
+			<h2 class='font-bold text-2xl mb-1'>Authors</h2>
 			<table class='table table-zebra table-compact w-full'>
 				<thead>
 					<tr>
@@ -33,7 +39,13 @@ const Authors = ({ token }) => {
 					})}
 				</tbody>
 			</table>
-			{token != null ? <AuthorForm names={names} /> : null}
+			{token != null ? (
+				<AuthorForm
+					names={names}
+					setNotification={setNotification}
+					timeout={timeout}
+				/>
+			) : null}
 		</div>
 	);
 };
