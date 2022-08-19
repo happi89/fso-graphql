@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { ALL_AUTHORS, AUTHOR_NAMES } from '../queries';
+import { ALL_AUTHORS, AUTHOR_NAMES } from '../../queries';
 import AuthorForm from './AuthorForm';
 
 const Authors = ({ token }) => {

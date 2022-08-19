@@ -1,5 +1,5 @@
-import Authors from './components/Authors';
-import Books from './components/Books';
+import Authors from './components/Authors/Authors';
+import Books from './components/Books/Books';
 import Navigation from './components/Navigation';
 import BookForm from './components/BookForm';
 import { useState } from 'react';
@@ -37,7 +37,7 @@ function App() {
 			case 'authors':
 				return <Authors token={token} />;
 			case 'books':
-				return <Books genre='' />;
+				return <Books genre='' token={token} />;
 			case 'book form':
 				return <BookForm />;
 			case 'recommendation':

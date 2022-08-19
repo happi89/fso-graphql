@@ -98,3 +98,11 @@ export const FILTER_BOOKS = gql`
 		}
 	}
 `;
+
+export const DELETE_BOOK = gql`
+	mutation deleteBook($title: String!) {
+		deleteBook(title: $title) {
+			title
+		}
+	}
+`;

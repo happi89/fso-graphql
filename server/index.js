@@ -63,6 +63,7 @@ const typeDefs = gql`
 		editAuthor(name: String!, setBornTo: Int!): Author
 		createUser(username: String!, favoriteGenre: String!): User
 		login(username: String!, password: String!): Token
+		deleteBook(title: String!): Book
 	}
 `;
 
@@ -128,6 +129,23 @@ const resolvers = {
 				});
 			}
 			return newBook.populate('author');
+		},
+		deleteBook: async (root, args, context) => {
+			const bookToDelete = await Book.findOne({ title: args.title });
+			const user = context.user;
+
+			if (!user) {
+				throw new AuthenticationError('not authenticated');
+			}
+
+			try {
+				await Book.deleteOne(bookToDelete);
+				return bookToDelete;
+			} catch (err) {
+				throw new UserInputError(err.message, {
+					invalidArgs: args,
+				});
+			}
 		},
 		editAuthor: async (root, args, context) => {
 			const authorToUpdate = await Author.findOne({ name: args.name });

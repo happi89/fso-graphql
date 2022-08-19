@@ -1,7 +1,12 @@
-import { FILTER_BOOKS } from '../queries';
+import FilterBooks from './FilterBooks';
+import { FILTER_BOOKS } from '../../queries';
 import { useQuery } from '@apollo/client';
+import DeleteBook from './DeleteBook';
+import { useState } from 'react';
 
-const Books = ({ genre }) => {
+const Books = ({ genre, token }) => {
+	const [showDelete, setShowDelete] = useState(false);
+
 	const { loading, error, data, refetch } = useQuery(FILTER_BOOKS, {
 		variables: { genre: '' },
 	});
@@ -33,8 +38,6 @@ const Books = ({ genre }) => {
 		});
 	};
 
-	const buttonStyle = 'btn btn-outline  m-2 text-lg';
-
 	return (
 		<div class='artboard artboard-horizontal phone-4 card-body my-0 mx-auto'>
 			<h2 class='text-2xl font-bold text-center mb-2'>Books</h2>
@@ -48,38 +51,20 @@ const Books = ({ genre }) => {
 				</thead>
 				<tbody>{filterBooks()}</tbody>
 			</table>
-			<h1 class='text-center font-bold m-1 text-lg'>Filter By Genre</h1>
-			<div class='flex justify-center btn-group'>
-				<button class={buttonStyle} onClick={() => refetch({ genre: '' })}>
-					All
-				</button>
-				<button
-					class={buttonStyle}
-					onClick={() => refetch({ genre: 'refactoring' })}>
-					Refactoring
-				</button>
-				<button class={buttonStyle} onClick={() => refetch({ genre: 'agile' })}>
-					Agile
-				</button>
-				<button
-					class={buttonStyle}
-					onClick={() => refetch({ genre: 'patterns' })}>
-					Patterns
-				</button>
-				<button
-					class={buttonStyle}
-					onClick={() => refetch({ genre: 'design' })}>
-					Design
-				</button>
-				<button class={buttonStyle} onClick={() => refetch({ genre: 'crime' })}>
-					Crime
-				</button>
-				<button
-					class={buttonStyle}
-					onClick={() => refetch({ genre: 'classic' })}>
-					Classic
-				</button>
-			</div>
+			{showDelete && token ? (
+				<DeleteBook
+					books={data}
+					showDelete={showDelete}
+					setShowDelete={setShowDelete}
+				/>
+			) : (
+				<FilterBooks
+					refetch={refetch}
+					showDelete={showDelete}
+					setShowDelete={setShowDelete}
+					token={token}
+				/>
+			)}
 		</div>
 	);
 };
