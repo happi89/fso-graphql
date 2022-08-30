@@ -7,9 +7,9 @@ const express = require('express');
 const http = require('http');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
-const User = require('./models/user');
-const typeDefs = require('./graphql/schema');
-const resolvers = require('./graphql/resolvers');
+const User = require('./src/models/user');
+const typeDefs = require('./src/graphql/schema');
+const resolvers = require('./src/graphql/resolvers');
 require('dotenv').config();
 
 const DATABASE_URL = process.env.DATABASE_URL;
