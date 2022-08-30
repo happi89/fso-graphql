@@ -1,5 +1,6 @@
 const { UserInputError, AuthenticationError } = require('apollo-server');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const Book = require('../models/book');
 const Author = require('../models/author');
 const User = require('../models/user');
@@ -115,21 +116,37 @@ const resolvers = {
 			return authorToUpdate;
 		},
 		createUser: async (root, args) => {
+			const password = args.password;
+			const saltRounds = 10;
+			const passwordHash = await bcrypt.hash(password, saltRounds);
+
+			if (args.username.length < 3 || password.length < 3) {
+				return res.status(400).json({
+					error: 'username and password have to be atleast 3 characters long',
+				});
+			}
+
 			const user = new User({
 				username: args.username,
+				passwordHash: passwordHash,
 				favoriteGenre: args.favoriteGenre,
 			});
 
-			return user.save().catch((err) => {
+			return await user.save().catch((err) => {
 				throw new UserInputError(err.message, {
 					invalidArgs: args,
 				});
 			});
 		},
+
 		login: async (root, args) => {
 			const user = await User.findOne({ username: args.username });
 
-			if (!user || args.password !== 'ahmad') {
+			const passwordTrue = !user
+				? false
+				: await bcrypt.compare(args.password, user.passwordHash);
+
+			if (!(user && passwordTrue)) {
 				throw new UserInputError('wrong credentials');
 			}
 
@@ -137,6 +154,7 @@ const resolvers = {
 				username: user.username,
 				id: user._id,
 			};
+
 			return { value: jwt.sign(forToken, process.env.SECRET) };
 		},
 	},

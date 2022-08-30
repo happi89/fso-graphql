@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { LOGIN } from '../../queries';
+import { LOGIN } from '../../graphql';
 import SignUp from './SignUp';
+import Error from '../Notifications/Error';
 
 const Login = ({ setToken, viewChange }) => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [showSignUp, setShowSignUp] = useState(false);
+
+	const [notification, setNotification] = useState(false);
+	let timeout;
 
 	const [login, result] = useMutation(LOGIN);
 
@@ -22,8 +26,16 @@ const Login = ({ setToken, viewChange }) => {
 
 	const submitLogin = async (event) => {
 		event.preventDefault();
+		clearTimeout(timeout);
 
-		login({ variables: { username, password } });
+		try {
+			await login({ variables: { username, password } });
+		} catch (error) {
+			timeout = setTimeout(() => {
+				setNotification(false);
+			}, 5000);
+			setNotification(true);
+		}
 
 		setUsername('');
 		setPassword('');
@@ -31,11 +43,11 @@ const Login = ({ setToken, viewChange }) => {
 
 	return (
 		<div class='card shadow-xl w-96 bg-base-100 my-0 mx-auto mt-3'>
+			{notification ? <Error error={'wrong credentials'} /> : null}
 			<div class='card-body'>
 				{showSignUp || (
 					<>
 						<h1 className='text-2xl font-bold'>Login</h1>
-						<p>demo user is happi89 password is ahmad</p>
 						<form onSubmit={submitLogin}>
 							<label className='label'>
 								<span className='label-text'>Username</span>

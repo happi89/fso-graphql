@@ -6,7 +6,7 @@ import { useState } from 'react';
 import Login from './components/Login/Login';
 import { gql, useApolloClient, useSubscription } from '@apollo/client';
 import Recommendation from './components/Recommendation';
-import { ALL_BOOKS } from './queries';
+import { ALL_BOOKS } from './graphql';
 import { useQuery } from '@apollo/client';
 import './index.css';
 

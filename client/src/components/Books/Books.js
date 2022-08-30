@@ -1,5 +1,5 @@
 import FilterBooks from './FilterBooks';
-import { FILTER_BOOKS } from '../../queries';
+import { FILTER_BOOKS } from '../../graphql';
 import { useQuery } from '@apollo/client';
 import DeleteBook from './DeleteBook';
 import { useState } from 'react';

@@ -1,6 +1,6 @@
 import Select from 'react-select';
 import { useState } from 'react';
-import { DELETE_BOOK, ALL_BOOKS } from '../../queries';
+import { DELETE_BOOK, ALL_BOOKS } from '../../graphql';
 import { useMutation } from '@apollo/client';
 
 const DeleteBook = ({ books, showDelete, setShowDelete }) => {

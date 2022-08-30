@@ -6,6 +6,11 @@ const schema = mongoose.Schema({
 		required: true,
 		minLength: 3,
 	},
+	passwordHash: {
+		type: String,
+		required: true,
+		minLength: 3,
+	},
 	favoriteGenre: {
 		type: String,
 		required: true,

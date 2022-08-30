@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AUTHOR_NAMES, UPDATE_AUTHOR, ALL_AUTHORS } from '../../queries';
+import { AUTHOR_NAMES, UPDATE_AUTHOR, ALL_AUTHORS } from '../../graphql';
 import { useMutation } from '@apollo/client';
 import Select from 'react-select';
 
