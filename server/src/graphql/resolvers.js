@@ -28,6 +28,7 @@ const resolvers = {
 					genres: { $in: [args.genre] },
 				}).populate('author');
 			}
+
 			return await Book.find({}).populate('author');
 		},
 		allAuthors: async () => await Author.find({}),
@@ -42,14 +43,14 @@ const resolvers = {
 	},
 	Mutation: {
 		addBook: async (root, args, context) => {
-			const author = await Author.findOne({ name: args.author });
 			const user = context.user;
-
 			if (!user) {
 				throw new AuthenticationError('not authenticated');
 			}
+			console.log(args);
+			const authorExists = await Author.findOne({ name: args.author });
 
-			if (author === null) {
+			if (!authorExists) {
 				const author = new Author({ name: args.author });
 				try {
 					await author.save();
@@ -60,7 +61,10 @@ const resolvers = {
 				}
 			}
 
-			const newBook = new Book({ ...args, author });
+			const newBook = new Book({
+				...args,
+				author: await Author.findOne({ name: args.author }),
+			});
 			try {
 				await newBook.save();
 			} catch (err) {

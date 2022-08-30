@@ -1,8 +1,14 @@
 import { useState } from 'react';
-import { ADD_BOOK, ALL_BOOKS, FAVORITE_GENRE } from '../../queries';
+import {
+	ADD_BOOK,
+	ALL_AUTHORS,
+	ALL_BOOKS,
+	FAVORITE_GENRE,
+} from '../../queries';
 import { useMutation } from '@apollo/client';
 import Info from '../Notifications/Info';
 import Success from '../Notifications/Success';
+import { updateCache } from '../../App';
 
 const BookForm = () => {
 	const [title, setTitle] = useState('');
@@ -15,13 +21,9 @@ const BookForm = () => {
 	let timeout;
 
 	const [createBook] = useMutation(ADD_BOOK, {
-		refetchQueries: [{ query: FAVORITE_GENRE }],
+		refetchQueries: [{ query: FAVORITE_GENRE }, { query: ALL_AUTHORS }],
 		update: (cache, response) => {
-			cache.updateQuery({ query: ALL_BOOKS }, ({ allBooks }) => {
-				return {
-					allBooks: allBooks.concat(response.data.addBook),
-				};
-			});
+			updateCache(cache, { query: ALL_BOOKS }, response.data.addBook);
 		},
 	});
 

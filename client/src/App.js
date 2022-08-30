@@ -4,11 +4,40 @@ import Navigation from './components/Navigation';
 import BookForm from './components/BookForm/BookForm';
 import { useState } from 'react';
 import Login from './components/Login/Login';
-import { useApolloClient } from '@apollo/client';
+import { gql, useApolloClient, useSubscription } from '@apollo/client';
 import Recommendation from './components/Recommendation';
 import { ALL_BOOKS } from './queries';
 import { useQuery } from '@apollo/client';
 import './index.css';
+
+export const BOOK_ADDED = gql`
+	subscription bookAdded {
+		bookAdded {
+			title
+			published
+			author {
+				name
+			}
+			genres
+			id
+		}
+	}
+`;
+
+export const updateCache = (cache, query, addedBook) => {
+	const uniqueByTitle = (a) => {
+		let seen = new Set();
+		return a.filter((book) => {
+			let k = book.title;
+			return seen.has(k) ? false : seen.add(k);
+		});
+	};
+	cache.updateQuery(query, ({ allBooks }) => {
+		return {
+			allBooks: uniqueByTitle(allBooks.concat(addedBook)),
+		};
+	});
+};
 
 function App() {
 	const [view, setView] = useState('login');
@@ -16,6 +45,15 @@ function App() {
 	const client = useApolloClient();
 
 	const result = useQuery(ALL_BOOKS);
+
+	useSubscription(BOOK_ADDED, {
+		onSubscriptionData: ({ subscriptionData }) => {
+			const addedBook = subscriptionData.data.bookAdded;
+			alert(`${addedBook.title} added`);
+
+			updateCache(client.cache, { query: ALL_BOOKS }, addedBook);
+		},
+	});
 
 	if (result.loading) {
 		return <div>loading...</div>;
