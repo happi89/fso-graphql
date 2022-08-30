@@ -4,7 +4,7 @@ import {
 	ALL_AUTHORS,
 	ALL_BOOKS,
 	FAVORITE_GENRE,
-} from '../../queries';
+} from '../../graphql';
 import { useMutation } from '@apollo/client';
 import Info from '../Notifications/Info';
 import Success from '../Notifications/Success';
@@ -32,7 +32,6 @@ const BookForm = () => {
 		clearTimeout(timeout);
 
 		createBook({ variables: { title, author, published, genres } });
-		console.log(title, author, published, genres);
 
 		timeout = setTimeout(() => {
 			setNotification(false);
