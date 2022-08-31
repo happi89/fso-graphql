@@ -76,6 +76,8 @@ const start = async () => {
 		path: '/',
 	});
 
+	app.use(express.static('./build'));
+
 	const PORT = 4000;
 
 	httpServer.listen(PORT, () =>
