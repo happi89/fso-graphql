@@ -27,7 +27,7 @@ const authLink = setContext((_, { headers }) => {
 const httpLink = new HttpLink({ uri: 'https://library-rdqf.onrender.com/' });
 
 const wsLink = new WebSocketLink({
-	uri: `ws://library-rdqf.onrender.com/`,
+	uri: `wss://library-rdqf.onrender.com/`,
 	options: {
 		reconnect: true,
 	},
