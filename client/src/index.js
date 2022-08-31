@@ -24,10 +24,10 @@ const authLink = setContext((_, { headers }) => {
 	};
 });
 
-const httpLink = new HttpLink({ uri: 'http://localhost:4000' });
+const httpLink = new HttpLink({ uri: 'https://library-rdqf.onrender.com/' });
 
 const wsLink = new WebSocketLink({
-	uri: `ws://localhost:4000/graphql`,
+	uri: `ws://library-rdqf.onrender.com/`,
 	options: {
 		reconnect: true,
 	},
